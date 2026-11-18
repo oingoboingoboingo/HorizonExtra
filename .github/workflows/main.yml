@@ -21,10 +21,10 @@ jobs:
         run: |
           mkdir -p dist
           pnpm run webpack:prod
-      - name: Package portable exe
+      - name: Package installer
         shell: bash
         working-directory: electron
-        run: node build/build.mjs --os windows --format portable --arch x64 --no-docker
+        run: node build/build.mjs --os windows --format nsis --arch x64 --no-docker
       - uses: actions/upload-artifact@v4
         with:
           name: Horizon-modded-windows
