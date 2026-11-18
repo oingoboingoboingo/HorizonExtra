@@ -582,9 +582,7 @@
         this.lastInput = Date.now();
 
         // Character Color Mod – live wrap while a character is active
-        this.$nextTick(() =>
-          this.tryApplyCharacterColoring(prevLength)
-        );
+        this.$nextTick(() => this.tryApplyCharacterColoring(prevLength));
       },
 
       // === Character Color Mod methods ===

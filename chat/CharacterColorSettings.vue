@@ -10,8 +10,8 @@
     <div class="character-color-settings">
       <p class="text-muted mb-3">
         Configure up to 5 characters. Use the <strong>"</strong> and
-        <strong>C</strong> buttons in the sidebar to choose what each
-        character colors:
+        <strong>C</strong> buttons in the sidebar to choose what each character
+        colors:
         <br />
         <strong>"</strong> = quotation marks (only one at a time) &nbsp;·&nbsp;
         <strong>C</strong> = character name (multiple allowed)
@@ -123,16 +123,41 @@
     min-width: 2rem;
     text-align: center;
   }
-  .redText { color: #f00; }
-  .orangeText { color: #f90; }
-  .yellowText { color: #ff0; }
-  .greenText { color: #0f0; }
-  .cyanText { color: #0ff; }
-  .purpleText { color: #93f; }
-  .blueText { color: #00f; }
-  .pinkText { color: #f9c; }
-  .blackText { color: #000; }
-  .brownText { color: #8a6d3b; }
-  .whiteText { color: #fff; text-shadow: 0 0 1px #000; }
-  .grayText { color: #ccc; }
+  .redText {
+    color: #f00;
+  }
+  .orangeText {
+    color: #f90;
+  }
+  .yellowText {
+    color: #ff0;
+  }
+  .greenText {
+    color: #0f0;
+  }
+  .cyanText {
+    color: #0ff;
+  }
+  .purpleText {
+    color: #93f;
+  }
+  .blueText {
+    color: #00f;
+  }
+  .pinkText {
+    color: #f9c;
+  }
+  .blackText {
+    color: #000;
+  }
+  .brownText {
+    color: #8a6d3b;
+  }
+  .whiteText {
+    color: #fff;
+    text-shadow: 0 0 1px #000;
+  }
+  .grayText {
+    color: #ccc;
+  }
 </style>

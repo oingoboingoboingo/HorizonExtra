@@ -192,10 +192,7 @@ export function applyLiveColoring(
   previousTextLength?: number
 ): { newText: string; newCursor: number } | null {
   // Skip deletions / backspace
-  if (
-    previousTextLength !== undefined &&
-    text.length < previousTextLength
-  ) {
+  if (previousTextLength !== undefined && text.length < previousTextLength) {
     return null;
   }
 
@@ -236,7 +233,10 @@ export function applyLiveColoring(
       // Skip a closing [/color] tag if present
       if (src[i] === ']') {
         const tagStart = src.lastIndexOf('[', i);
-        if (tagStart >= 0 && src.slice(tagStart, i + 1).startsWith('[/color]')) {
+        if (
+          tagStart >= 0 &&
+          src.slice(tagStart, i + 1).startsWith('[/color]')
+        ) {
           i = tagStart - 1;
           while (i >= 0 && /\s/.test(src[i])) i--;
         }
@@ -244,7 +244,10 @@ export function applyLiveColoring(
       // Skip an opening [color=...] tag if we landed inside/after one
       if (i >= 0 && src[i] === ']') {
         const tagStart = src.lastIndexOf('[', i);
-        if (tagStart >= 0 && /^\[color=[a-z]+\]$/i.test(src.slice(tagStart, i + 1))) {
+        if (
+          tagStart >= 0 &&
+          /^\[color=[a-z]+\]$/i.test(src.slice(tagStart, i + 1))
+        ) {
           i = tagStart - 1;
           while (i >= 0 && /\s/.test(src[i])) i--;
         }
@@ -280,13 +283,10 @@ export function applyLiveColoring(
         if (candidate !== part) continue;
 
         const beforeChar = start > 0 ? text[start - 1] : undefined;
-        const afterChar =
-          cursorPos < text.length ? text[cursorPos] : undefined;
+        const afterChar = cursorPos < text.length ? text[cursorPos] : undefined;
         const isBoundary =
-          (beforeChar === undefined ||
-            /[\s\[\]"'.,!?;:\n]/.test(beforeChar)) &&
-          (afterChar === undefined ||
-            /[\s\[\]"'.,!?;:\n]/.test(afterChar));
+          (beforeChar === undefined || /[\s\[\]"'.,!?;:\n]/.test(beforeChar)) &&
+          (afterChar === undefined || /[\s\[\]"'.,!?;:\n]/.test(afterChar));
 
         if (!isBoundary) continue;
 
@@ -324,8 +324,7 @@ export function applyLiveColoring(
           const isBoundary =
             (beforeChar === undefined ||
               /[\s\[\]"'.,!?;:\n]/.test(beforeChar)) &&
-            (afterChar === undefined ||
-              /[\s\[\]"'.,!?;:\n]/.test(afterChar));
+            (afterChar === undefined || /[\s\[\]"'.,!?;:\n]/.test(afterChar));
           if (!isBoundary) continue;
 
           const prev = getPreviousWord(text, start);
@@ -416,10 +415,7 @@ function isAlreadyColored(
   openTag: string,
   closeTag: string
 ): boolean {
-  const lookBehind = text.slice(
-    Math.max(0, start - openTag.length - 2),
-    start
-  );
+  const lookBehind = text.slice(Math.max(0, start - openTag.length - 2), start);
   const lookAhead = text.slice(end, end + closeTag.length + 2);
   if (lookBehind.endsWith(openTag) && lookAhead.startsWith(closeTag)) {
     return true;
@@ -470,10 +466,7 @@ export function recolorExistingText(text: string): string {
       `(?<!\\[color=[a-z]+\\])\\b${escapeRegExp(job.part)}\\b(?!\\[/color\\])`,
       'g'
     );
-    result = result.replace(
-      nameRegex,
-      `[color=${job.color}]$&[/color]`
-    );
+    result = result.replace(nameRegex, `[color=${job.color}]$&[/color]`);
   }
 
   // Quotes (single owner)

@@ -40,7 +40,7 @@
             type="button"
             class="mode-btn"
             :class="{ on: hasQuotes(index) }"
-            title="Color quotation marks &quot;...&quot; (only one at a time)"
+            title='Color quotation marks "..." (only one at a time)'
             @click.stop="toggleQuotes(index)"
           >
             "
@@ -196,16 +196,40 @@
     color: #fff;
   }
 
-  .red-dot { background: #f00; }
-  .orange-dot { background: #f90; }
-  .yellow-dot { background: #ff0; }
-  .green-dot { background: #0f0; }
-  .cyan-dot { background: #0ff; }
-  .purple-dot { background: #93f; }
-  .blue-dot { background: #00f; }
-  .pink-dot { background: #f9c; }
-  .black-dot { background: #000; }
-  .brown-dot { background: #8a6d3b; }
-  .white-dot { background: #fff; }
-  .gray-dot { background: #ccc; }
+  .red-dot {
+    background: #f00;
+  }
+  .orange-dot {
+    background: #f90;
+  }
+  .yellow-dot {
+    background: #ff0;
+  }
+  .green-dot {
+    background: #0f0;
+  }
+  .cyan-dot {
+    background: #0ff;
+  }
+  .purple-dot {
+    background: #93f;
+  }
+  .blue-dot {
+    background: #00f;
+  }
+  .pink-dot {
+    background: #f9c;
+  }
+  .black-dot {
+    background: #000;
+  }
+  .brown-dot {
+    background: #8a6d3b;
+  }
+  .white-dot {
+    background: #fff;
+  }
+  .gray-dot {
+    background: #ccc;
+  }
 </style>
