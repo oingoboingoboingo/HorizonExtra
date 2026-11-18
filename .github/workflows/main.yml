@@ -1,0 +1,32 @@
+name: Build Windows (modded)
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: pnpm/action-setup@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version-file: '.nvmrc'
+          cache: 'pnpm'
+      - run: npm install --global node-gyp
+      - run: pnpm install --frozen-lockfile
+      - name: Build app
+        shell: bash
+        working-directory: electron
+        run: |
+          mkdir -p dist
+          pnpm run webpack:prod
+      - name: Package portable exe
+        shell: bash
+        working-directory: electron
+        run: node build/build.mjs --os windows --format portable --arch x64 --no-docker
+      - uses: actions/upload-artifact@v4
+        with:
+          name: Horizon-modded-windows
+          path: electron/dist/*.exe
+          if-no-files-found: error
