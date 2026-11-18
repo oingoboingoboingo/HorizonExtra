@@ -310,6 +310,14 @@
           </a>
         </div>
       </div>
+
+      <!-- ===== Character Dialogue Colors (personal mod) ===== -->
+      <character-color-buttons
+        @open-settings="openCharacterColorSettings"
+        @active-changed="onCharacterColorActiveChanged"
+      />
+      <character-color-settings ref="characterColorSettings" />
+      <!-- ===== End Character Dialogue Colors ===== -->
     </sidebar>
     <div
       style="
@@ -471,6 +479,9 @@
   import QuickJump from './QuickJump.vue';
   import { EventBus } from './preview/event-bus';
   import { group, log } from 'node:console';
+  import CharacterColorButtons from './CharacterColorButtons.vue';
+  import CharacterColorSettings from './CharacterColorSettings.vue';
+  import { characterColorStore } from './characterColors';
 
   const unreadClasses = {
     [Conversation.UnreadState.None]: '',
@@ -507,7 +518,9 @@
       'channel-group-section': ChannelGroupSection,
       'channel-group-menu': ChannelGroupMenu,
       'channel-menu': ChannelMenu,
-      dropdown: Dropdown
+      dropdown: Dropdown,
+      'character-color-buttons': CharacterColorButtons,
+      'character-color-settings': CharacterColorSettings
     },
     data() {
       return {
@@ -1190,7 +1203,18 @@
 
       stopAllAds(): void {
         core.adCenter.stopAllAds();
+      },
+
+      // === Character Color Mod ===
+      openCharacterColorSettings(): void {
+        (this.$refs.characterColorSettings as any).open();
+      },
+
+      onCharacterColorActiveChanged(_slot: any): void {
+        // When a character is activated the Editor will handle live coloring
+        // on the next keystroke. This handler is kept for future extension.
       }
+      // === End Character Color Mod ===
     }
   });
 </script>

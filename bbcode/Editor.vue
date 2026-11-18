@@ -198,6 +198,11 @@
   import { default as EIconSelector } from './EIconSelector.vue';
   import Modal from '../components/Modal.vue';
   import l from '../chat/localize';
+  import {
+    characterColorStore,
+    applyLiveColoring,
+    recolorExistingText
+  } from '../chat/characterColors';
 
   export default Vue.extend({
     components: {
@@ -566,9 +571,56 @@
           this.undoStack = this.undoStack.slice(this.undoIndex);
           this.undoIndex = 0;
         }
+
+        // Character Color Mod – remember length before any live change
+        const prevLength = (this as any)._charColorPrevLength as
+          | number
+          | undefined;
+        (this as any)._charColorPrevLength = this.text.length;
+
         this.$emit('input', this.text);
         this.lastInput = Date.now();
+
+        // Character Color Mod – live wrap while a character is active
+        this.$nextTick(() =>
+          this.tryApplyCharacterColoring(prevLength)
+        );
       },
+
+      // === Character Color Mod methods ===
+      tryApplyCharacterColoring(previousTextLength?: number): void {
+        const el = this.element as HTMLTextAreaElement;
+        if (!el) return;
+
+        const result = applyLiveColoring(
+          this.text,
+          el.selectionStart,
+          previousTextLength
+        );
+        if (result) {
+          this.text = result.newText;
+          (this as any)._charColorPrevLength = result.newText.length;
+          this.$nextTick(() => {
+            this.setSelection(result.newCursor);
+            this.$emit('input', this.text);
+          });
+        }
+      },
+
+      applyRecolorIfNeeded(): void {
+        if (!characterColorStore.recolorExisting) return;
+
+        const newText = recolorExistingText(this.text);
+        if (newText !== this.text) {
+          const cursor = (this.element as HTMLTextAreaElement).selectionStart;
+          this.text = newText;
+          this.$nextTick(() => {
+            this.setSelection(Math.min(cursor, newText.length));
+            this.$emit('input', this.text);
+          });
+        }
+      },
+      // === End Character Color Mod ===
 
       //By "global" we mean global to the editor, not for the entire page.
       //They fire when the editor element is focused, not the text box.
